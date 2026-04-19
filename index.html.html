@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work19 | Systems Engineering & Operational AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --accent: #dc2626;
+            --bg-dark: #020202;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            color: #f1f5f9;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Perspective Grid Background */
+        .perspective-grid {
+            perspective: 1000px;
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .grid-lines {
+            position: absolute;
+            inset: -100% -100%;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: clamp(30px, 5vw, 50px) clamp(30px, 5vw, 50px);
+            transform: rotateX(60deg);
+            animation: gridFlow 40s linear infinite;
+        }
+
+        @keyframes gridFlow {
+            from { transform: rotateX(60deg) translateY(0); }
+            to { transform: rotateX(60deg) translateY(50px); }
+        }
+
+        /* Glassmorphism & High-End UI */
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(25px) saturate(160%);
+            -webkit-backdrop-filter: blur(25px) saturate(160%);
+            border: 1px solid var(--glass-border);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-panel:hover {
+            border-color: rgba(220, 38, 38, 0.4);
+            background: rgba(15, 15, 15, 0.8);
+            transform: translateY(-4px);
+        }
+
+        /* Highlight Text Effect */
+        .highlight-ai {
+            position: relative;
+            background: linear-gradient(90deg, #fff, #dc2626, #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* Neural Nucleus Animation */
+        .nucleus-pulse {
+            animation: nucleusFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes nucleusFloat {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.2)); }
+            50% { transform: scale(1.05); filter: drop-shadow(0 0 40px rgba(220, 38, 38, 0.4)); }
+        }
+
+        /* Atomic Orbit System - Responsive Scaling */
+        .orbit-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 450px;
+            margin: 0 auto;
+        }
+
+        .electron {
+            position: absolute;
+            width: clamp(24px, 5vw, 32px);
+            height: clamp(24px, 5vw, 32px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            z-index: 20;
+        }
+
+        /* Responsive Orbital Paths */
+        @keyframes orbit-alpha {
+            from { transform: rotate(0deg) translateX(clamp(80px, 15vw, 145px)) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(clamp(80px, 15vw, 145px)) rotate(-360deg); }
+        }
+        @keyframes orbit-beta {
+            from { transform: rotate(120deg) translateX(clamp(60px, 12vw, 115px)) rotate(-120deg); }
+            to { transform: rotate(480deg) translateX(clamp(60px, 12vw, 115px)) rotate(-480deg); }
+        }
+        @keyframes orbit-gamma {
+            from { transform: rotate(240deg) translateX(clamp(100px, 18vw, 170px)) rotate(-240deg); }
+            to { transform: rotate(600deg) translateX(clamp(100px, 18vw, 170px)) rotate(-600deg); }
+        }
+        @keyframes orbit-delta {
+            from { transform: rotate(45deg) translateX(clamp(70px, 14vw, 135px)) rotate(-45deg); }
+            to { transform: rotate(405deg) translateX(clamp(70px, 14vw, 135px)) rotate(-405deg); }
+        }
+        @keyframes orbit-epsilon {
+            from { transform: rotate(180deg) translateX(clamp(110px, 20vw, 190px)) rotate(-180deg); }
+            to { transform: rotate(540deg) translateX(clamp(110px, 20vw, 190px)) rotate(-540deg); }
+        }
+
+        .e-alpha { animation: orbit-alpha 9s linear infinite; }
+        .e-beta { animation: orbit-beta 13s linear infinite reverse; }
+        .e-gamma { animation: orbit-gamma 16s linear infinite; }
+        .e-delta { animation: orbit-delta 11s linear infinite reverse; }
+        .e-epsilon { animation: orbit-epsilon 22s linear infinite; }
+
+        /* Reveal Up Animation */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Tech Status Pill */
+        .tech-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 100px;
+            font-family: monospace;
+            letter-spacing: 0.1em;
+            font-size: 9px;
+            color: #94a3b8;
+        }
+
+        @media (min-width: 768px) {
+            .tech-status-pill { gap: 12px; padding: 6px 16px; font-size: 10px; }
+        }
+
+        .scan-line {
+            width: 1px;
+            height: 12px;
+            background: #dc2626;
+            animation: scan 1.5s ease-in-out infinite;
+        }
+
+        @keyframes scan {
+            0%, 100% { opacity: 0.2; transform: scaleY(0.5); }
+            50% { opacity: 1; transform: scaleY(1.5); }
+        }
+
+        /* Section Spacing Helpers */
+        .section-padding {
+            padding-top: clamp(3rem, 10vw, 8rem);
+            padding-bottom: clamp(3rem, 10vw, 8rem);
+        }
+
+        .container-width {
+            width: 100%;
+            max-width: 1440px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: clamp(1rem, 5vw, 3rem);
+            padding-right: clamp(1rem, 5vw, 3rem);
+        }
+
+        /* Mobile Menu State */
+        #mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Green Glow Effect for ClinicOS */
+        .green-glow-card {
+            box-shadow: 0 0 50px -10px rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .green-glow-card::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at center, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .green-glow-card:hover {
+            box-shadow: 0 0 60px -5px rgba(16, 185, 129, 0.3);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        /* NEW PREMIUM SOCIAL CARD EFFECTS */
+        .social-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255,255,255,0.15);
+            background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%);
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.5);
+        }
+
+        .social-glow {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            filter: blur(50px);
+            opacity: 0;
+            transition: opacity 0.6s;
+            pointer-events: none;
+        }
+
+        .social-card:hover .social-glow {
+            opacity: 0.4;
+        }
+
+        .social-icon-box {
+            position: relative;
+            z-index: 10;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.4s;
+        }
+
+        .social-card:hover .social-icon-box {
+            transform: rotate(-10deg) scale(1.1);
+            background: white;
+            color: black;
+        }
+    </style>
+</head>
+<body class="selection:bg-red-600 selection:text-white">
+
+    <div class="perspective-grid">
+        <div class="grid-lines"></div>
+    </div>
+
+    <!-- Mobile Navigation Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center lg:hidden">
+        <button id="close-menu" class="absolute top-8 right-8 text-white p-2">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div class="flex flex-col gap-10 text-center text-2xl font-black uppercase tracking-[0.2em]">
+            <a href="#about" class="text-slate-400 hover:text-red-600 transition mobile-link">About</a>
+            <a href="#services" class="text-slate-400 hover:text-red-600 transition mobile-link">Services</a>
+            <a href="#products" class="text-slate-400 hover:text-red-600 transition mobile-link">Products</a>
+            <a href="#work19ai" class="text-slate-400 hover:text-red-600 transition mobile-link">Ecosystem</a>
+            <a href="#contact" class="px-8 py-3 bg-red-600 text-white rounded-full mt-4 mobile-link">Contact</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 top-0 px-4 py-4 md:px-6 md:py-8">
+        <div class="container-width">
+            <div class="flex justify-between items-center glass-panel rounded-2xl px-6 py-3 md:px-8 md:py-4">
+                <div class="flex items-center">
+                    <span class="text-white font-black tracking-tighter text-xl md:text-2xl uppercase">WORK<span class="text-red-600">19</span></span>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden lg:flex gap-8 xl:gap-10 text-[10px] xl:text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                    <a href="#about" class="hover:text-white transition">About</a>
+                    <a href="#services" class="hover:text-white transition">Services</a>
+                    <a href="#products" class="hover:text-white transition">Products</a>
+                    <a href="#work19ai" class="hover:text-white transition">Ecosystem</a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <a href="#contact" class="hidden sm:inline-block px-5 py-2 md:px-6 md:py-2.5 bg-red-600 text-white text-[10px] md:text-[11px] font-black uppercase tracking-widest rounded-full hover:bg-red-700 transition shadow-lg shadow-red-600/20">
+                        Contact
+                    </a>
+                    <button id="menu-btn" class="lg:hidden text-white p-1 hover:text-red-500 transition">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex items-center pt-24 md:pt-32">
+        <div class="container-width">
+            <div class="max-w-5xl">
+                <div class="reveal-up active">
+                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-red-500/20 bg-red-500/5 text-red-500 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] mb-6 md:mb-8">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                        </span>
+                        Operational Engineering
+                    </span>
+                    <h1 class="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-white mb-6 md:mb-10 tracking-tighter leading-[1] md:leading-[0.85]">
+                        The Operating System for <span class="text-slate-600">Modern Work.</span>
+                    </h1>
+                    <p class="max-w-2xl text-base sm:text-xl md:text-2xl text-slate-400 font-light leading-relaxed">
+                        Work19 is a systems engineering firm. We design the logic, automation, and communication frameworks that act as the invisible skeleton of your organization.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Ecosystem Section -->
+    <section id="work19ai" class="section-padding bg-[#050505] relative overflow-hidden border-t border-white/5">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[500px] md:w-[800px] h-[300px] sm:h-[500px] md:h-[800px] bg-red-600/5 rounded-full blur-[100px] md:blur-[160px] pointer-events-none"></div>
+        
+        <div class="container-width relative z-10">
+            <div class="glass-panel rounded-[2rem] md:rounded-[3rem] p-6 sm:p-10 md:p-16 reveal-up border-red-500/10">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-12 md:gap-16">
+                    <div class="w-full lg:max-w-2xl text-center lg:text-left">
+                        <div class="mb-6 md:mb-8 flex justify-center lg:justify-start">
+                            <div class="tech-status-pill">
+                                <span class="scan-line"></span>
+                                <span class="uppercase font-bold tracking-[0.2em] text-white">Ecosystem Logic</span>
+                                <span class="w-[1px] h-3 bg-white/10"></span>
+                                <span class="text-[8px] md:text-[9px] flex items-center gap-1.5">
+                                    <span class="w-1 h-1 bg-red-600 rounded-full animate-pulse"></span>
+                                    SYSTEM LIVE
+                                </span>
+                            </div>
+                        </div>
+
+                        <h2 class="text-3xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter leading-none mb-6 md:mb-8">
+                            <span class="highlight-ai">Work19 Ecosystem</span>
+                        </h2>
+                        <p class="text-slate-400 text-base sm:text-xl md:text-2xl font-light leading-relaxed mb-8 md:mb-12">
+                            The implementation layer where architecture becomes action. We deploy custom intelligence to manage the heavy lifting of your operations.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-8">
+                            <div class="p-5 md:p-6 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-red-600/30 transition-all group">
+                                <div class="flex items-center gap-3 justify-center sm:justify-start">
+                                    <div class="p-2.5 rounded-lg bg-red-600/10 text-red-500">
+                                        <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="text-sm md:text-lg font-black text-white tracking-tighter uppercase">Work19.ai</h3>
+                                </div>
+                            </div>
+                            <div class="p-5 md:p-6 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-emerald-600/30 transition-all group">
+                                <div class="flex items-center gap-3 justify-center sm:justify-start">
+                                    <div class="p-2.5 rounded-lg bg-emerald-600/10 text-emerald-500">
+                                        <i data-lucide="hammer" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="text-sm md:text-lg font-black text-white tracking-tighter uppercase">Work19.builds</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Atomic Engine Visual -->
+                    <div class="relative w-full max-w-[240px] sm:max-w-md aspect-square mx-auto lg:mx-0">
+                        <div class="orbit-container">
+                            <svg class="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 400 400">
+                                <circle cx="200" cy="200" r="145" fill="none" stroke="white" stroke-width="0.5" stroke-dasharray="8 8"/>
+                                <circle cx="200" cy="200" r="115" fill="none" stroke="white" stroke-width="0.5" stroke-dasharray="4 12"/>
+                                <circle cx="200" cy="200" r="170" fill="none" stroke="white" stroke-width="0.5" />
+                                <circle cx="200" cy="200" r="135" fill="none" stroke="white" stroke-width="0.5" stroke-dasharray="2 20"/>
+                                <circle cx="200" cy="200" r="190" fill="none" stroke="white" stroke-width="0.3" stroke-dasharray="1 1"/>
+                            </svg>
+
+                            <div class="relative z-10 p-5 sm:p-10 glass-panel rounded-full border border-red-500/30 nucleus-pulse shadow-[0_0_80px_rgba(220,38,38,0.15)]">
+                                <i data-lucide="cpu" class="w-8 h-8 sm:w-16 sm:h-16 text-red-600 stroke-[1px]"></i>
+                            </div>
+
+                            <div class="electron e-alpha bg-red-600 !border-red-400">
+                                <i data-lucide="bot" class="w-3 h-3 sm:w-4 h-4 text-white"></i>
+                            </div>
+                            <div class="electron e-beta">
+                                <i data-lucide="zap" class="w-3 h-3 sm:w-4 h-4 text-white"></i>
+                            </div>
+                            <div class="electron e-gamma">
+                                <i data-lucide="database" class="w-3 h-3 sm:w-4 h-4 text-slate-400"></i>
+                            </div>
+                            <div class="electron e-delta">
+                                <i data-lucide="message-square" class="w-3 h-3 sm:w-4 h-4 text-indigo-400"></i>
+                            </div>
+                            <div class="electron e-epsilon">
+                                <i data-lucide="shield-check" class="w-3 h-3 sm:w-4 h-4 text-emerald-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="section-padding relative bg-black overflow-hidden border-t border-white/5">
+        <div class="container-width relative z-10 flex flex-col items-start text-left">
+            <div class="reveal-up w-full">
+                <div class="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
+                    <span class="text-red-500 font-black text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] whitespace-nowrap">About Work19</span>
+                    <span class="w-full h-[1px] bg-white/5"></span>
+                </div>
+                
+                <h2 class="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-white mb-8 md:mb-16 tracking-tighter leading-[1.1]">
+                    Engineered for those tired of <br class="hidden xl:block"> 
+                    <span class="text-slate-600 italic">managing manually.</span>
+                </h2>
+                
+                <div class="space-y-6 md:space-y-12 text-slate-400 text-base sm:text-xl md:text-2xl font-light leading-relaxed max-w-5xl">
+                    <p>
+                        We help businesses <span class="text-white">simplify how work runs</span>—building systems that handle tasks, organize information, and keep everything moving without constant effort.
+                    </p>
+                    <p>
+                        From automating everyday processes to building complete digital systems, our goal is simple: <br class="hidden md:block">
+                        make your work <span class="text-white border-b border-red-600/30">lighter, faster, and easier</span> to manage.
+                    </p>
+                    <p class="text-[9px] md:text-[11px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-red-500 pt-6 md:pt-8 flex items-center gap-3 md:gap-4">
+                        <span class="w-6 md:w-8 h-[1px] bg-red-600"></span>
+                        Growth shouldn't come from more work—it comes from better systems.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="section-padding border-t border-white/5 bg-black">
+        <div class="container-width">
+            <div class="rounded-[2rem] md:rounded-[3rem] p-6 sm:p-12 md:p-20 relative overflow-hidden reveal-up green-glow-card bg-gradient-to-br from-emerald-950/20 to-black">
+                <div class="absolute top-0 right-0 p-8 md:p-12 opacity-5 md:opacity-10 pointer-events-none text-emerald-500">
+                    <i data-lucide="stethoscope" class="w-32 h-32 md:w-64 md:h-64"></i>
+                </div>
+                
+                <div class="max-w-3xl relative z-10">
+                    <span class="text-emerald-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] mb-3 md:mb-4 block">Products</span>
+                    <h2 class="text-3xl sm:text-5xl md:text-7xl font-black text-white mb-6 md:mb-8 tracking-tighter">ClinicOS</h2>
+                    <p class="text-slate-400 text-base sm:text-lg md:text-xl font-light mb-8 md:mb-12 leading-relaxed">
+                        A specialized deployment for healthcare providers and diagnostic labs. ClinicOS removes the friction between patients and providers by automating the entire administrative layer.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 md:gap-8 items-center mb-8 md:mb-16">
+                        <a href="#contact" class="w-full sm:w-auto text-center inline-flex items-center justify-center gap-4 px-6 md:px-8 py-3 md:py-4 bg-emerald-600 text-white rounded-xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] hover:bg-emerald-500 transition group shadow-[0_0_30px_-5px_rgba(16,185,129,0.5)]">
+                            Get ClinicOS <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-2 transition-transform"></i>
+                        </a>
+                    </div>
+
+                    <div class="pt-6 md:pt-12 border-t border-white/5">
+                        <div class="flex items-center gap-4">
+                            <span class="w-6 md:w-8 h-[1px] bg-emerald-500/30"></span>
+                            <span class="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-slate-500">Other projects coming soon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section-padding relative bg-black">
+        <div class="container-width">
+            <div class="reveal-up mb-10 md:mb-16">
+                <span class="text-red-500 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] mb-3 md:mb-4 block">Services</span>
+                <h2 class="text-4xl sm:text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter">What We Build</h2>
+                <p class="text-slate-400 text-base sm:text-lg md:text-xl font-light max-w-2xl leading-relaxed">
+                    We don’t just create websites. We design systems that help businesses operate, grow, and scale.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <div class="glass-panel p-6 md:p-8 rounded-3xl flex flex-col gap-6 group">
+                    <div class="flex items-center justify-between">
+                        <div class="p-3 rounded-xl bg-white/5 text-white group-hover:bg-red-600 transition-colors">
+                            <i data-lucide="layout" class="w-5 h-5 md:w-6 md:h-6"></i>
+                        </div>
+                        <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-red-500/60 bg-red-500/5 px-3 py-1.5 rounded-full border border-red-500/10 whitespace-nowrap">Credibility</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-black text-white uppercase tracking-tight mb-4">Web Foundations</h3>
+                        <div class="space-y-2 text-[11px] md:text-sm text-slate-500 font-medium italic">
+                            <p>• Business Websites</p>
+                            <p>• Personal Brand Sites</p>
+                            <p>• Landing Pages</p>
+                            <p>• Portfolio Websites</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 md:p-8 rounded-3xl flex flex-col gap-6 group">
+                    <div class="flex items-center justify-between">
+                        <div class="p-3 rounded-xl bg-white/5 text-white group-hover:bg-red-600 transition-colors">
+                            <i data-lucide="settings" class="w-5 h-5 md:w-6 md:h-6"></i>
+                        </div>
+                        <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-red-500/60 bg-red-500/5 px-3 py-1.5 rounded-full border border-red-500/10 whitespace-nowrap">Operational</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-black text-white uppercase tracking-tight mb-4">Custom Web Systems</h3>
+                        <div class="space-y-2 text-[11px] md:text-sm text-slate-500 font-medium italic">
+                            <p>• Admin Dashboards</p>
+                            <p>• Internal Tools</p>
+                            <p>• Workflow Systems</p>
+                            <p>• Data Platforms</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 md:p-8 rounded-3xl flex flex-col gap-6 group sm:col-span-2 lg:col-span-1">
+                    <div class="flex items-center justify-between">
+                        <div class="p-3 rounded-xl bg-white/5 text-white group-hover:bg-red-600 transition-colors">
+                            <i data-lucide="zap" class="w-5 h-5 md:w-6 md:h-6"></i>
+                        </div>
+                        <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-red-500/60 bg-red-500/5 px-3 py-1.5 rounded-full border border-red-500/10 whitespace-nowrap">Efficiency</span>
+                    </div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-black text-white uppercase tracking-tight mb-4">Automation & AI</h3>
+                        <div class="space-y-2 text-[11px] md:text-sm text-slate-500 font-medium italic">
+                            <p>• WhatsApp Automation</p>
+                            <p>• AI Assistants</p>
+                            <p>• CRM Automation</p>
+                            <p>• Smart Notifications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Systems Grid -->
+    <section class="section-padding relative bg-[#030303] border-t border-white/5">
+        <div class="container-width">
+            <div class="reveal-up mb-12 md:mb-20 text-center max-w-4xl mx-auto">
+                <span class="text-emerald-500 text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] mb-3 md:mb-4 block">High-Value Deployment</span>
+                <h2 class="text-3xl sm:text-5xl md:text-7xl font-black text-white mb-6 tracking-tighter leading-tight">AI Systems & Intelligent Automation</h2>
+                <p class="text-slate-400 text-base sm:text-lg md:text-xl font-light leading-relaxed">
+                    We build AI-powered systems that don’t just assist — they operate, decide, and scale your workflows with autonomous precision.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <div class="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col group border-emerald-500/5 hover:border-emerald-500/30 min-h-[280px] md:min-h-[340px]">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500">
+                            <i data-lucide="bot" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-emerald-500/60 bg-emerald-500/5 px-3 py-1.5 rounded-full border border-emerald-500/10 whitespace-nowrap">Digital Employee</span>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase tracking-tight mb-4">AI Assistants</h3>
+                    <div class="space-y-1.5 md:space-y-2 text-[11px] md:text-sm text-slate-500 font-medium italic mt-auto">
+                        <p>• Chat-based AI</p>
+                        <p>• Voice Assistants</p>
+                        <p>• Business AI (MIA)</p>
+                        <p>• Task Automation</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col group border-emerald-500/5 hover:border-emerald-500/30 min-h-[280px] md:min-h-[340px]">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500">
+                            <i data-lucide="refresh-ccw" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-emerald-500/60 bg-emerald-500/5 px-3 py-1.5 rounded-full border border-emerald-500/10">Zero Manual</span>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase tracking-tight mb-4">Workflow Automation</h3>
+                    <div class="space-y-1.5 md:space-y-2 text-[11px] md:text-sm text-slate-500 font-medium italic mt-auto">
+                        <p>• Lead/CRM Automation</p>
+                        <p>• Form/WhatsApp Pipelines</p>
+                        <p>• Internal Tasks</p>
+                        <p>• No-code Integrations</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] flex flex-col group border-emerald-500/5 hover:border-emerald-500/30 min-h-[280px] md:min-h-[340px]">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="p-3 rounded-2xl bg-emerald-500/10 text-emerald-500 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-500">
+                            <i data-lucide="code-2" class="w-6 h-6"></i>
+                        </div>
+                        <span class="text-[8px] md:text-[9px] font-black uppercase tracking-widest text-emerald-500/60 bg-emerald-500/5 px-3 py-1.5 rounded-full border border-emerald-500/10">Specific Uses</span>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-black text-white uppercase tracking-tight mb-4">Custom AI Solutions</h3>
+                    <div class="space-y-1.5 md:space-y-2 text-[11px] md:text-sm text-slate-500 font-medium italic mt-auto">
+                        <p>• AI for Clinics</p>
+                        <p>• Business Operations AI</p>
+                        <p>• Industry Systems</p>
+                        <p>• AI Dashboards</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding relative bg-black">
+        <div class="container-width text-center reveal-up">
+            <h2 class="text-4xl sm:text-6xl md:text-8xl font-black text-white mb-6 md:mb-10 tracking-tighter leading-none">
+                Build the <br/><span class="text-red-600">Backbone.</span>
+            </h2>
+            <p class="text-slate-400 text-base sm:text-xl max-w-2xl mx-auto mb-10 md:mb-16 font-light">
+                We work with founders, clinic owners, and institutions who are ready to transition from manual chaos to engineered systems.
+            </p>
+            
+            <div class="max-w-2xl mx-auto glass-panel p-6 sm:p-10 md:p-12 rounded-[2rem] md:rounded-[2.5rem] border-white/5">
+                <form class="space-y-5 md:space-y-6 text-left" onsubmit="event.preventDefault();">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 px-1">Identity</label>
+                            <input type="text" placeholder="Full Name" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 md:px-5 md:py-4 text-white text-sm transition-all focus:bg-white/10">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 px-1">Endpoint</label>
+                            <input type="email" placeholder="Email Address" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 md:px-5 md:py-4 text-white text-sm transition-all focus:bg-white/10">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-500 px-1">Inquiry</label>
+                        <textarea rows="4" placeholder="Briefly describe your operational bottlenecks..." class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 md:px-5 md:py-4 text-white text-sm transition-all focus:bg-white/10 resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 md:py-6 bg-white text-black rounded-xl font-black text-[10px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.3em] hover:bg-red-600 hover:text-white transition-all duration-500 flex items-center justify-center gap-3 group">
+                        Transmit Data <i data-lucide="send" class="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- PREMIUM RE-DESIGNED SOCIAL SECTION -->
+            <div class="mt-20 md:mt-32 max-w-4xl mx-auto">
+                <div class="flex items-center gap-4 mb-10 justify-center">
+                    <span class="w-12 h-[1px] bg-white/10"></span>
+                    <span class="text-[9px] md:text-[10px] font-black text-slate-500 uppercase tracking-[0.5em]">Digital Presence</span>
+                    <span class="w-12 h-[1px] bg-white/10"></span>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-4">
+                    <!-- LinkedIn Card -->
+                    <a href="https://www.linkedin.com/in/aahilsheikhofficial" target="_blank" rel="noopener noreferrer" 
+                       class="social-card p-8 rounded-[2rem] flex items-center justify-between group">
+                        <div class="social-glow bg-[#0a66c2] top-0 left-0"></div>
+                        <div class="flex flex-col items-start gap-2 relative z-10">
+                            <span class="text-[9px] font-bold text-[#0a66c2] uppercase tracking-[0.2em] opacity-80">Network</span>
+                            <h3 class="text-2xl font-black text-white tracking-tight uppercase">LINKEDIN</h3>
+                            <p class="text-[10px] text-slate-500 font-medium italic">Professional Systems Engineering</p>
+                        </div>
+                        <div class="social-icon-box p-4 rounded-2xl text-[#0a66c2]">
+                            <i data-lucide="linkedin" class="w-8 h-8"></i>
+                        </div>
+                    </a>
+
+                    <!-- Instagram Card -->
+                    <a href="https://www.instagram.com/work19.ai/" target="_blank" rel="noopener noreferrer" 
+                       class="social-card p-8 rounded-[2rem] flex items-center justify-between group">
+                        <div class="social-glow bg-[#dc2743] top-0 right-0"></div>
+                        <div class="flex flex-col items-start gap-2 relative z-10">
+                            <span class="text-[9px] font-bold text-[#dc2743] uppercase tracking-[0.2em] opacity-80">Community</span>
+                            <h3 class="text-2xl font-black text-white tracking-tight uppercase">INSTAGRAM</h3>
+                            <p class="text-[10px] text-slate-500 font-medium italic">Behind the Scenes & Builds</p>
+                        </div>
+                        <div class="social-icon-box p-4 rounded-2xl text-[#dc2743]">
+                            <i data-lucide="instagram" class="w-8 h-8"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 md:py-12 px-6 border-t border-white/5 bg-black">
+        <div class="container-width flex flex-col md:flex-row justify-between items-center text-[8px] md:text-[10px] text-slate-600 font-bold uppercase tracking-[0.2em] md:tracking-[0.4em] gap-6 text-center md:text-left">
+            <span>&copy; 2026 Work19. All rights reserved.</span>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+                <a href="#" class="hover:text-white transition">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition">Terms</a>
+                <a href="#contact" class="hover:text-white transition">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        const toggleMenu = (show) => {
+            if(show) {
+                mobileMenu.classList.add('open');
+                document.body.style.overflow = 'hidden';
+            } else {
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            }
+        };
+
+        menuBtn.addEventListener('click', () => toggleMenu(true));
+        closeBtn.addEventListener('click', () => toggleMenu(false));
+        mobileLinks.forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+
+        // Responsive Scroll Reveal
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -20px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
+
+        // Background grid interaction
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const grid = document.querySelector('.grid-lines');
+            if(grid) {
+                requestAnimationFrame(() => {
+                    grid.style.transform = `rotateX(60deg) translateY(${scrolled * 0.05}px)`;
+                });
+            }
+        });
+
+        // Feedback for clicks/taps
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('touchstart', function() {
+                this.style.transform = 'scale(0.95)';
+            });
+            el.addEventListener('touchend', function() {
+                this.style.transform = '';
+            });
+        });
+
+        // Smooth magnetic effect for social cards
+        document.querySelectorAll('.social-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const glow = card.querySelector('.social-glow');
+                
+                glow.style.left = `${x - 50}px`;
+                glow.style.top = `${y - 50}px`;
+            });
+        });
+    </script>
+</body>
+</html>
